@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kedai Huh Hah - Pedasnya Bikin Nagih!</title>
+
+  <!-- Kode Favicon untuk Tab Chrome -->
+  <link rel="icon" type="image/png" href="logo.png" class="h-[100px] md:h-[130px] w-auto object-contain" />
+
+  
+  
+
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            red: '#d10000',
+                            dark: '#0a0a0a',
+                            card: '#161616'
+                        }
+                    },
+                    fontFamily: {
+                        poppins: ['Poppins', 'sans-serif'],
+                        cursive: ['Permanent Marker', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .torn-border-top {
+            position: relative;
+        }
+        .torn-border-top::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 40' preserveAspectRatio='none'%3E%3Cpath d='M0,40 L0,20 Q50,40 100,20 T200,20 T300,20 T400,20 T500,20 T600,20 T700,20 T800,20 T900,20 T1000,20 L1000,40 Z' fill='%230a0a0a'/%3E%3C/svg%3E");
+            z-index: 10;
+        }
+
+        .img-hover-scale {
+            transition: transform 0.3s ease;
+        }
+        .menu-card:hover .img-hover-scale {
+            transform: scale(1.1);
+        }
+
+        /* Diagonal background for promo */
+        .promo-bg {
+            background: linear-gradient(135deg, #d10000 0%, #a30000 100%);
+            position: relative;
+        }
+        
+        /* Sticky header background transition */
+        .header-scrolled {
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- 1. Header / Navbar -->
+    <header id="navbar" class="fixed w-full top-0 z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-4 md:px-8 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-2">
+                <!-- Ini adalah kode untuk memanggil gambar logo Anda -->
+                <img src="logo.png" alt="Logo Kedai Huh Hah" class="h-16 w-auto" />
+  
+                     <div class="flex items-center">
+                         <span class="text-2xl font-bold italic text-white">Kedai</span>
+                         <span class="text-3xl font-bold italic text-red-500 ml-2">Huh Hah</span>
+                    </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex gap-6 lg:gap-8 font-medium text-sm">
+                <a href="#beranda" class="hover:text-brand-red transition-colors">Beranda</a>
+                <a href="#menu" class="hover:text-brand-red transition-colors">Menu</a>
+                <a href="#tentang-kami" class="hover:text-brand-red transition-colors">Tentang Kami</a>
+                <a href="#promo" class="hover:text-brand-red transition-colors">Promo</a>
+                <a href="#galeri" class="hover:text-brand-red transition-colors">Galeri</a>
+                <a href="#kontak" class="hover:text-brand-red transition-colors">Kontak</a>
+            </nav>
+
+            <!-- CTA Button -->
+            <a href="https://wa.me/6285655943006" target="_blank" rel="noopener noreferrer" class="hidden md:flex items-center gap-2 bg-brand-red hover:bg-red-700 text-white px-5 py-2 rounded-full font-semibold transition-all">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                Pesan Sekarang
+            </a>
+
+            <!-- Mobile Menu Toggle -->
+            <button type="button" class="md:hidden text-2xl text-white" id="mobile-menu-btn" aria-label="Buka menu navigasi" aria-controls="mobile-menu" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-brand-dark p-5 flex flex-col gap-4 shadow-xl border-t border-gray-800">
+            <a href="#beranda" class="hover:text-brand-red">Beranda</a>
+            <a href="#menu" class="hover:text-brand-red">Menu</a>
+            <a href="#tentang-kami" class="hover:text-brand-red">Tentang Kami</a>
+            <a href="#promo" class="hover:text-brand-red">Promo</a>
+            <a href="#galeri" class="hover:text-brand-red">Galeri</a>
+            <a href="#kontak" class="hover:text-brand-red">Kontak</a>
+            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="bg-brand-red text-white text-center py-2 rounded-full font-semibold mt-2">
+                <i class="fa-brands fa-whatsapp"></i> Pesan Sekarang
+            </a>
+        </div>
+    </header>
+
+    <!-- 2. Hero Section -->
+    <section id="beranda" class="scroll-mt-24 relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden flex items-center min-h-[90vh]">
+        <!-- Background decorative elements -->
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-brand-red/10 blur-3xl rounded-full -z-10 transform translate-x-1/2 -translate-y-1/2"></div>
+        
+        <div class="container mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Text -->
+            <div class="space-y-6 z-10">
+                <h1 class="text-5xl md:text-7xl font-bold leading-tight flex flex-col">
+                    <span class="text-white">Kedai</span>
+                    <span class="font-cursive text-brand-red text-6xl md:text-8xl mt-2 tracking-wide transform -rotate-2">Huh Hah</span>
+                </h1>
+                <p class="text-2xl font-semibold text-gray-200 mt-4 font-cursive tracking-wide">
+                    Sekali Coba, Bikin Huh Hah!
+                </p>
+                <p class="text-gray-400 text-lg max-w-md">
+                    Sensasi pedas yang bikin penasaran. Nikmati berbagai menu dengan cita rasa yang menggugah selera.
+                </p>
+                <div class="pt-4">
+                    <a href="#menu" class="inline-block bg-brand-red hover:bg-red-700 text-white px-8 py-3 rounded-full font-semibold text-lg transition-transform hover:-translate-y-1 shadow-lg shadow-red-900/50">
+                        Lihat Menu <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                <!-- Tambahkan kode ini persis di bawah tombol "Lihat Menu" -->
+                <div class="mt-8 pt-6 border-t border-zinc-800/80 grid grid-cols-3 gap-4 sm:gap-8 max-w-md">
+                    <div class="text-left">
+                        <p class="text-2xl font-black text-red-500">100%</p>
+                        <p class="text-xs text-zinc-400">Halal & Higienis</p>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-2xl font-black text-red-500">1.000+</p>
+                        <p class="text-xs text-zinc-400">Porsi Terjual</p>
+                    </div>
+                    <div class="text-left">
+                        <p class="text-2xl font-black text-red-500">4.9 ★</p>
+                        <p class="text-xs text-zinc-400">Rating Pelanggan</p>
+                    </div>
+                </div>
+            </div> <!-- End Left Text -->
+
+            <!-- Right Image -->
+            <!-- Bagian Header Kanan (Foto Utama) -->
+            <div class="relative flex justify-center items-center">
+                <!-- Stiker 'Pedasnya Bikin Nagih!' -->
+            <div class="absolute -top-6 -right-2 z-10 bg-black/80 text-red-500 font-extrabold italic text-center p-4 rounded-full border-2 border-red-600 shadow-lg transform rotate-12">
+                 Pedasnya<br>Bikin Nagih!
+            </div>
+            <!-- Foto Mie Jobel/Jibel Header -->
+             <img 
+                 src="jobel.png" 
+                 alt="Mie Jobel Kedai Huh Hah" 
+                 class="w-full max-w-md aspect-square object-cover rounded-full shadow-2xl border-4 border-red-600/50 hover:scale-105 transition-transform duration-300"
+             />
+            </div> <!-- End Right Image -->
+        </div> <!-- End Hero Grid -->
+    </section>
+
+    <!-- 3. Menu Andalan Section -->
+    <section id="menu" class="scroll-mt-24 py-20 bg-brand-card torn-border-top relative">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="text-center mb-16">
+                <div class="flex justify-center items-center gap-4 mb-2">
+                    <i class="fa-solid fa-fire text-brand-red"></i>
+                    <h2 class="text-3xl md:text-5xl font-bold font-cursive tracking-widest">
+                        Menu <span class="text-brand-red">Andalan</span>
+                    </h2>
+                    <i class="fa-solid fa-fire text-brand-red"></i>
+                </div>
+            </div>
+
+            <!-- Responsive Grid for 5 Items -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+                
+             <!-- Kartu Menu: Pentol Huh Hah -->
+             <div class="menu-card bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:border-red-600 hover:shadow-2xl hover:shadow-red-600/20">
+                 <!-- Foto Menu (Pastikan file pentol.png ada di folder yang sama) -->
+                 <img loading="lazy" decoding="async"
+                    src="pentol.png" 
+                    alt="Pentol Huh Hah" 
+                     class="w-32 h-32 object-cover rounded-full mb-3 shadow-md border-2 border-red-500/20 transition-all duration-300 transform hover:scale-110 hover:-translate-y-2 hover:shadow-2xl hover:shadow-red-600/40 hover:border-red-500 cursor-pointer"
+                />
+  
+                 <!-- Nama & Deskripsi Menu -->
+                 <h3 class="text-xl font-bold text-white mb-1">Pentol Huh Hah</h3>
+                 <p class="text-zinc-400 text-sm mb-3">Pentol kenyal dengan sambal pedas menggoda.</p>
+  
+                <!-- Harga Menu -->
+                 <span class="text-red-500 font-extrabold text-lg mb-4">Rp 5.000</span>
+  
+                <!-- Tombol Direct WhatsApp -->
+                <a 
+                    href="https://wa.me/6285655943006?text=Halo%20Kedai%20Huh%20Hah,%20saya%20mau%20pesan%20Pentol%20Huh%20Hah" 
+                    target="_blank" 
+                    class="w-full py-2.5 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 active:scale-95 cursor-pointer select-none"
+                 rel="noopener noreferrer">
+                <!-- Ikon WhatsApp -->
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                </svg>
+                Pesan via WA
+                </a>
+            </div>
+
+            <!-- Kartu Menu 2: Wonton Goreng -->
+            <div class="menu-card bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:border-red-600 hover:shadow-2xl hover:shadow-red-600/20">
+  
+                <!-- Foto Menu (Pangsit Goreng) dengan Animasi Timbul/Hover -->
+                <img loading="lazy" decoding="async"
+                    src="wontongoreng.png" 
+                    alt="Wonton Goreng" 
+                    class="w-32 h-32 object-cover rounded-full mb-3 shadow-md border-2 border-red-500/20 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-600/40 hover:border-red-500 cursor-pointer"
+                />
+  
+                <!-- Nama & Deskripsi Menu -->
+                <h3 class="text-xl font-bold text-white mb-1">Pangsit Goreng</h3>
+                <p class="text-zinc-400 text-sm mb-3">Pangsit goreng gurih dan renyah dengan isian nikmat.</p>
+                
+                <!-- Harga Menu -->
+                <span class="text-red-500 font-extrabold text-lg mb-4">Rp 6.000</span>
+                
+                <!-- Tombol Direct WhatsApp dengan Animasi Tekan -->
+                <a 
+                    href="https://wa.me/6285655943006?text=Halo%20Kedai%20Huh%20Hah,%20saya%20mau%20pesan%20Wonton%20Goreng" 
+                    target="_blank" 
+                    class="w-full py-2.5 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 active:scale-95 cursor-pointer select-none"
+                 rel="noopener noreferrer">
+                    <!-- Ikon WhatsApp -->
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                    </svg>
+                    Pesan via WA
+                </a>
+            </div>
+
+            <!-- Kartu Menu 3: Wonton Chili -->
+            <div class="menu-card bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:border-red-600 hover:shadow-2xl hover:shadow-red-600/20">
+            
+                <!-- Foto Menu (Wonton Chili) dengan Animasi Timbul -->
+                <img loading="lazy" decoding="async"
+                    src="wontonchili.png" 
+                    alt="Wonton Chili Oil" 
+                    class="w-32 h-32 object-cover rounded-full mb-3 shadow-md border-2 border-red-500/20 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-600/40 hover:border-red-500 cursor-pointer"
+                />
+  
+                <!-- Nama & Deskripsi Menu -->
+                <h3 class="text-xl font-bold text-white mb-1">Wonton Chili Oil</h3>
+                <p class="text-zinc-400 text-sm mb-3">Pangsit lembut disiram minyak cabai spesial pedas gurih.</p>
+                
+                <!-- Harga Menu -->
+                <span class="text-red-500 font-extrabold text-lg mb-4">Rp 6.000</span>
+                
+                <!-- Tombol Direct WhatsApp dengan Animasi Tekan -->
+                <a 
+                    href="https://wa.me/6285655943006?text=Halo%20Kedai%20Huh%20Hah,%20saya%20mau%20pesan%20Wonton%20Chili%20Oil" 
+                    target="_blank" 
+                    class="w-full py-2.5 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 active:scale-95 cursor-pointer select-none"
+                 rel="noopener noreferrer">
+                <!-- Ikon WhatsApp -->
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                </svg>
+                Pesan via WA
+                 </a>
+            </div>
+                <!-- Kartu Menu: Mie Jobel -->
+                <div class="menu-card bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:border-red-600 hover:shadow-2xl hover:shadow-red-600/20">
+                
+                <!-- Foto Menu (Mie Jobel) dengan Animasi Timbul -->
+                <img loading="lazy" decoding="async"
+                    src="jobel.png" 
+                    alt="Mie Jobel" 
+                    class="w-32 h-32 object-cover rounded-full mb-3 shadow-md border-2 border-red-500/20 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-600/40 hover:border-red-500 cursor-pointer"
+                />
+                
+                <!-- Nama & Deskripsi Menu -->
+                <h3 class="text-xl font-bold text-white mb-1">Mie Jobel</h3>
+                <p class="text-zinc-400 text-sm mb-3">Mie pedas lezat dengan bumbu rahasia cita rasa khas.</p>
+                
+                <!-- Harga Menu -->
+                <span class="text-red-500 font-extrabold text-lg mb-4">Rp 9.000</span>
+                
+                <!-- Tombol Direct WhatsApp dengan Animasi Tekan -->
+                <a 
+                    href="https://wa.me/6285655943006?text=Halo%20Kedai%20Huh%20Hah,%20saya%20mau%20pesan%20Mie%20Jobel" 
+                    target="_blank" 
+                    class="w-full py-2.5 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 active:scale-95 cursor-pointer select-none"
+                 rel="noopener noreferrer">
+                    <!-- Ikon WhatsApp -->
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                    </svg>
+                    Pesan via WA
+                </a>
+                </div>
+
+                <!-- Kartu Menu: Mie Keliru -->
+                <div class="menu-card bg-zinc-900 border border-zinc-800 rounded-2xl p-4 flex flex-col justify-between items-center text-center shadow-lg transition-all duration-300 transform hover:-translate-y-2 hover:border-red-600 hover:shadow-2xl hover:shadow-red-600/20">
+                
+                <!-- Foto Menu (Mie Keliru) dengan Animasi Timbul -->
+                <img loading="lazy" decoding="async"
+                    src="kliru.png" 
+                    alt="Mie Keliru" 
+                    class="w-32 h-32 object-cover rounded-full mb-3 shadow-md border-2 border-red-500/20 transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-600/40 hover:border-red-500 cursor-pointer"
+                />
+                
+                <!-- Nama & Deskripsi Menu -->
+                <h3 class="text-xl font-bold text-white mb-1">Mie Keliru</h3>
+                <p class="text-zinc-400 text-sm mb-3">Menu unik nan lezat yang bikin penasaran.</p>
+                
+                <!-- Harga Menu -->
+                <span class="text-red-500 font-extrabold text-lg mb-4">Rp 9.000</span>
+                
+                <!-- Tombol Direct WhatsApp dengan Animasi Tekan -->
+                <a 
+                    href="https://wa.me/6285655943006?text=Halo%20Kedai%20Huh%20Hah,%20saya%20mau%20pesan%20Mie%20Keliru" 
+                    target="_blank" 
+                    class="w-full py-2.5 px-4 bg-red-600 hover:bg-red-700 active:bg-red-800 text-white font-semibold rounded-xl text-sm flex items-center justify-center gap-2 transition-all duration-150 shadow-md hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0.5 active:scale-95 cursor-pointer select-none"
+                 rel="noopener noreferrer">
+                   <!-- Ikon WhatsApp -->
+                    <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+                    </svg>
+                    Pesan via WA
+                </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+<!-- Seksi Tentang Kami -->
+<section id="tentang-kami" class="scroll-mt-24 py-16 bg-black text-white">
+  <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+    
+    <!-- Bagian Kiri: Foto Kedai (Penting: ganti bagian src dengan kedai.jpeg) -->
+    <div class="relative">
+      <!-- Bingkai Merah di Belakang -->
+      <div class="absolute -top-4 -left-4 w-12 h-12 border-t-4 border-l-4 border-red-600"></div>
+      
+      <!-- Hiasan Selotip Kertas (Tape Effect) atas -->
+      <div class="absolute -top-3 left-4 bg-zinc-200/90 text-transparent w-16 h-5 transform -rotate-12 shadow-sm z-10 pointer-events-none border border-zinc-300/20">.</div>
+
+      <!-- Foto Asli Kedai (kedai.jpeg) -->
+      <div class="overflow-hidden rounded-lg shadow-2xl border-2 border-zinc-800 transform -rotate-1 hover:rotate-0 transition-all duration-300">
+        <img loading="lazy" decoding="async"
+          src="kedai.jpeg" 
+          alt="Kedai Huh Hah tampak depan" 
+          class="w-full h-[350px] object-cover hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+
+      <!-- Hiasan Selotip Kertas (Tape Effect) bawah -->
+      <div class="absolute -bottom-3 right-8 bg-zinc-200/90 text-transparent w-16 h-5 transform rotate-6 shadow-sm z-10 pointer-events-none border border-zinc-300/20">.</div>
+      <div class="absolute -bottom-4 -right-4 w-12 h-12 border-b-4 border-r-4 border-red-600"></div>
+    </div>
+
+    <!-- Bagian Kanan: Teks Deskripsi -->
+    <div>
+      <h2 class="text-3xl md:text-4xl font-extrabold mb-6">
+        Tentang <span class="text-red-500 italic font-black">KAMI</span>
+      </h2>
+      <p class="text-zinc-300 leading-relaxed mb-4">
+        Kedai Huh Hah adalah sebuah usaha kuliner (F&B) yang menawarkan menu makanan dengan cita rasa khas, tingkat kepedasan yang menggugah selera, serta penamaan menu yang unik dan kreatif.
+      </p>
+      <p class="text-zinc-300 leading-relaxed mb-6">
+        Berlokasi strategis di area depan sekolah menengah pertama (SMP), kedai ini menjadi daya tarik utama bagi kalangan pelajar.
+      </p>
+      
+      <a href="#menu" class="inline-flex items-center gap-2 py-2.5 px-6 bg-red-600 hover:bg-red-700 active:scale-95 text-white font-bold rounded-lg transition-all mb-8">
+        Selengkapnya &rarr;
+      </a>
+
+      <!-- Poin Kelebihan -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-full bg-red-600/20 text-red-500 flex items-center justify-center font-bold">♥</span>
+          <p class="font-semibold text-zinc-200">Rasa Lezat & Unik</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-full bg-red-600/20 text-red-500 flex items-center justify-center font-bold">🔥</span>
+          <p class="font-semibold text-zinc-200">Pedasnya Menggugah Selera</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <span class="w-8 h-8 rounded-full bg-red-600/20 text-red-500 flex items-center justify-center font-bold">👍</span>
+          <p class="font-semibold text-zinc-200">Harga Bersahabat</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+    <!-- 5. Promo Banner Section -->
+    <section id="promo" class="scroll-mt-24 promo-bg py-12 md:py-16">
+        <div class="container mx-auto px-4 md:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8 bg-brand-dark/20 p-8 rounded-2xl border border-white/20 backdrop-blur-sm">
+                
+                <div class="flex items-center gap-6">
+                    <!-- Megaphone Icon -->
+                    <div class="hidden md:flex flex-shrink-0 bg-white text-brand-red rounded-full w-20 h-20 items-center justify-center shadow-lg transform -rotate-12">
+                        <i class="fa-solid fa-bullhorn text-4xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl md:text-5xl font-bold font-cursive italic text-white drop-shadow-md">
+                            Promo Spesial!
+                        </h2>
+                        <p class="text-xl md:text-2xl text-white/90 mt-1 font-semibold">Paket Hemat Pelajar</p>
+                    </div>
+                </div>
+
+                <div class="text-center md:text-right">
+                    <p class="text-white/80 text-sm font-semibold mb-1 uppercase tracking-wider">Mulai dari</p>
+                    <p class="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg">Rp 5.000</p>
+                    
+                    <a href="https://wa.me/6285655943006" target="_blank" class="inline-flex items-center gap-2 bg-transparent border-2 border-white text-white hover:bg-white hover:text-brand-red px-6 py-3 rounded-full font-bold transition-all" rel="noopener noreferrer">
+                        <i class="fa-brands fa-whatsapp text-2xl text-green-400 group-hover:text-green-500"></i>
+                        Pesan Sekarang melalui WhatsApp
+                    </a>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+<!-- Footer / Bagian Bawah -->
+<footer class="bg-zinc-950 text-white pt-16 pb-8 border-t border-zinc-900">
+  <div class="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+    
+    <!-- 1. Galeri Kami (Foto dari Drive) -->
+    <div id="galeri" class="scroll-mt-24">
+      <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span>📸</span> Galeri Kami
+      </h3>
+      <!-- Grid Foto dari Drive -->
+      <div class="grid grid-cols-2 gap-2">
+        <div class="overflow-hidden rounded-lg aspect-square bg-zinc-900 border border-zinc-800">
+          <img loading="lazy" decoding="async" src="pentol.png" alt="Galeri Pentol" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+        </div>
+        <div class="overflow-hidden rounded-lg aspect-square bg-zinc-900 border border-zinc-800">
+          <img loading="lazy" decoding="async" src="jobel.png" alt="Galeri Mie Jobel" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+        </div>
+        <div class="overflow-hidden rounded-lg aspect-square bg-zinc-900 border border-zinc-800">
+          <img loading="lazy" decoding="async" src="wontonchili.png" alt="Galeri Wonton Chili" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+        </div>
+        <div class="overflow-hidden rounded-lg aspect-square bg-zinc-900 border border-zinc-800">
+          <img loading="lazy" decoding="async" src="kedai.jpeg" alt="Galeri Kedai" class="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Hubungi Kami (Hanya WhatsApp & TikTok) -->
+    <div id="kontak" class="scroll-mt-24">
+      <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span>✈️</span> Hubungi Kami
+      </h3>
+      <ul class="space-y-4">
+        <!-- WhatsApp -->
+        <li>
+          <a href="https://wa.me/6285655943006" target="_blank" class="flex items-center gap-3 hover:text-red-500 transition-colors" rel="noopener noreferrer">
+            <svg class="w-5 h-5 fill-emerald-500" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+            </svg>
+            <span class="text-sm font-medium">+6285655943006</span>
+          </a>
+        </li>
+        <!-- TikTok -->
+        <li>
+          <a href="https://www.tiktok.com/@kedaihuhhah" target="_blank" class="flex items-center gap-3 hover:text-red-500 transition-colors" rel="noopener noreferrer">
+            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.9-.5-4.11-1.33-.17-.11-.32-.24-.48-.36v7.24c.01 2.53-.99 5.11-2.94 6.76-2.01 1.75-4.84 2.33-7.4 1.56-2.58-.77-4.79-2.72-5.74-5.22-.97-2.52-.63-5.54.91-7.75 1.49-2.18 4.02-3.55 6.69-3.53.05 1.25.01 2.5.02 3.75-1.57-.01-3.29.62-4.22 1.93-.84 1.13-.91 2.72-.25 4.01.62 1.27 2.01 2.14 3.44 2.15 1.45.03 2.9-.78 3.52-2.1.28-.59.39-1.25.38-1.9V.02z"/>
+            </svg>
+            <span class="text-sm font-medium">@kedaihuhhah</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 3. Informasi Lokasi -->
+    <div>
+      <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span class="text-red-500">📍</span> Lokasi Kedai
+      </h3>
+      <p class="text-xs text-zinc-400 mb-3">Klik tombol di bawah untuk membuka peta Google Maps langsung:</p>
+      
+      <!-- Link Titik Lokasi 1 -->
+      <a 
+        href="https://maps.app.goo.gl/JASSFToSqAzthZTy7" 
+        target="_blank" 
+        class="flex items-center gap-2 text-xs text-zinc-200 bg-zinc-900 hover:bg-red-600/20 hover:border-red-500 border border-zinc-800 p-2.5 rounded-xl mb-2 transition-all"
+       rel="noopener noreferrer">
+        <span>📍</span>
+        <span class="font-semibold">Buka Lokasi Utama (Maps 1)</span>
+      </a>
+
+      <!-- Link Titik Lokasi 2 -->
+      <a 
+        href="https://maps.app.goo.gl/D2U14SwHXyJ1bQZd8" 
+        target="_blank" 
+        class="flex items-center gap-2 text-xs text-zinc-200 bg-zinc-900 hover:bg-red-600/20 hover:border-red-500 border border-zinc-800 p-2.5 rounded-xl transition-all"
+       rel="noopener noreferrer">
+        <span>📍</span>
+        <span class="font-semibold">Buka Lokasi Cabang (Maps 2)</span>
+      </a>
+    </div>
+
+    <!-- 4. Gambar Peta Lokasi (lokasi.png) dari Drive -->
+    <div>
+      <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span>🗺️</span> Peta Wilayah
+      </h3>
+      <a 
+        href="https://maps.app.goo.gl/JASSFToSqAzthZTy7" 
+        target="_blank" 
+        class="block group relative overflow-hidden rounded-xl border border-zinc-800 hover:border-red-500 transition-all shadow-lg"
+       rel="noopener noreferrer">
+        <!-- Menggunakan file lokasi.png dari Drive -->
+        <img loading="lazy" decoding="async"
+          src="lokasi.png" 
+          alt="Peta Lokasi Kedai Huh Hah" 
+          class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <!-- Overlay Tombol Buka Maps saat di-hover -->
+        <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+          <span class="bg-red-600 text-white text-xs font-bold py-1.5 px-3 rounded-lg shadow-md">
+            Buka Google Maps &rarr;
+          </span>
+        </div>
+      </a>
+    </div>
+
+  </div>
+
+</footer>
+<!-- Sub-Footer / Baris Footer Paling Bawah -->
+<div class="bg-black py-6 border-t border-zinc-900">
+  <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
+    
+    <!-- Kiri: Logo Asli dari Drive & Teks Brand -->
+    <div class="flex items-center gap-3">
+      <img src="logo.png" alt="Logo Kedai Huh Hah" class="h-16 w-auto object-contain" />
+      <span class="text-xl font-bold italic text-white tracking-wide">
+        Kedai <span class="text-red-500">Huh Hah</span>
+      </span>
+    </div>
+
+    <!-- Tengah: Slogan / Tagline -->
+    <p class="text-sm italic text-zinc-400 text-center">
+      "Rasakan Sensasi Pedasnya, Rasakan Keunikannya!"
+    </p>
+
+    <!-- Kanan: Hanya Logo WhatsApp & TikTok -->
+    <div class="flex items-center gap-5">
+      <!-- WhatsApp -->
+      <a href="https://wa.me/6285655943006" target="_blank" aria-label="WhatsApp" class="text-zinc-400 hover:text-emerald-500 transition-colors" rel="noopener noreferrer">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z"/>
+        </svg>
+      </a>
+
+      <!-- TikTok -->
+      <a href="https://www.tiktok.com/@kedaihuhhah" target="_blank" aria-label="TikTok" class="text-zinc-400 hover:text-white transition-colors" rel="noopener noreferrer">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+          <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.06-2.9-.5-4.11-1.33-.17-.11-.32-.24-.48-.36v7.24c.01 2.53-.99 5.11-2.94 6.76-2.01 1.75-4.84 2.33-7.4 1.56-2.58-.77-4.79-2.72-5.74-5.22-.97-2.52-.63-5.54.91-7.75 1.49-2.18 4.02-3.55 6.69-3.53.05 1.25.01 2.5.02 3.75-1.57-.01-3.29.62-4.22 1.93-.84 1.13-.91 2.72-.25 4.01.62 1.27 2.01 2.14 3.44 2.15 1.45.03 2.9-.78 3.52-2.1.28-.59.39-1.25.38-1.9V.02z"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+</div>
+    <!-- JavaScript -->
+    <script>
+        // Sticky Header Script
+        const header = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('header-scrolled');
+                header.classList.remove('py-4');
+                header.classList.add('py-2');
+            } else {
+                header.classList.remove('header-scrolled');
+                header.classList.add('py-4');
+                header.classList.remove('py-2');
+            }
+        });
+
+        // Mobile Menu Toggle Script
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            const isOpening = mobileMenu.classList.contains('hidden');
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuBtn.setAttribute('aria-expanded', String(isOpening));
+            mobileMenuBtn.setAttribute('aria-label', isOpening ? 'Tutup menu navigasi' : 'Buka menu navigasi');
+        });
+
+        // Tutup menu setelah tautan dipilih
+        const mobileLinks = mobileMenu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                mobileMenuBtn.setAttribute('aria-label', 'Buka menu navigasi');
+            });
+        });
+
+        // Tutup menu dengan tombol Escape
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                mobileMenuBtn.setAttribute('aria-label', 'Buka menu navigasi');
+            }
+        });
+    </script>
+</body>
+</html>
